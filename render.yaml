@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: uli-backend
+    env: node
+    buildCommand: |
+      export PNPM_FLAGS="--no-frozen-lockfile" 
+      pnpm install $PNPM_FLAGS
+      pnpm run build
+    startCommand: node -r tsconfig-paths/register dist/app.js
+    runtime: node
+    nodeVersion: "18"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: CORS_ORIGIN
+        value: "http://localhost:5173,https://ulis-kurse.vercel.app"
+      - key: MONGODB_URI
+        sync: false  # Set this in Render dashboard
+      - key: JWT_SECRET
+        sync: false  # Set this in Render dashboard
